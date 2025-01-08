@@ -1,4 +1,16 @@
 
+#nuevaPartida {
+  display: none;
+}
+
+#simular {
+  visibility: hidden;
+}
+
+.copas {
+height: 200px;
+margin-left: 10px;
+}
 
 #puntuacion {
   align-content: center;
@@ -11,10 +23,6 @@
 
 }
 
-.baraja {
-  height: 100px;
-  width: 100px;
-}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
