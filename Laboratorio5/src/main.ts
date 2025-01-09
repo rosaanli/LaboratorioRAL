@@ -78,10 +78,8 @@ document.addEventListener("DOMContentLoaded",actualizarPuntuacion)
 const gameOver = () => {
   if (puntuacionTotal >= 7.5) {
     alert("Has perdido");
-    puntuacionTotal = 0;
     botonDarCarta.disabled = true;
     botonPlantarse.disabled = true;
-    verificarBotones();
   }
 }
 
@@ -94,6 +92,7 @@ const handleSieteyMedia =()=>{
   sumaPuntuacion(dameNumeroDeCarta);
   actualizarPuntuacion();
   gameOver();
+  verificarBotones();
 }
 
 
@@ -117,19 +116,19 @@ const mePlanto =(puntuacionTotal:number) => {
       alert("Casi casi...");
   };
 
-  if (puntuacionTotal > 7.5) {
+  if (puntuacionTotal === 7.5) {
     alert("¡ Lo has clavado! ¡Enhorabuena!");
   };
 };
 
 
 const handlePlantarse = () => {
-    mePlanto(puntuacionTotal);
-    botonPlantarse.disabled = true;
-    botonDarCarta.disabled = true;
-    puntuacionTotal = 0;
-    verificarBotones();
-  }
+  mePlanto(puntuacionTotal);
+  botonPlantarse.disabled = true;
+  botonDarCarta.disabled = true;
+  verificarBotones();
+}
+
 
 const botonPlantarse = document.getElementById("botonPlantarse") as HTMLButtonElement;
   if (botonPlantarse) {
@@ -140,28 +139,49 @@ const botonPlantarse = document.getElementById("botonPlantarse") as HTMLButtonEl
 const botonNuevaPartida = document.getElementById("nuevaPartida") as HTMLButtonElement;
 
 const verificarBotones = () => {
-  if (botonPlantarse.disabled && botonPlantarse.disabled) {
+  if (botonPlantarse.disabled && botonDarCarta.disabled) {
     botonNuevaPartida.style.display = "block";
   }
 }
 
-
 const nuevaPartida = () => {
-      puntuacionTotal = 0;
-      actualizarPuntuacion();
-      handleSieteyMedia();
-      botonPlantarse.disabled = false;
-      botonDarCarta.disabled = false;
-      botonNuevaPartida.style.visibility = "hidden";
-    };
+  botonPlantarse.disabled = false;
+  botonDarCarta.disabled = false;
+  botonNuevaPartida.style.display = "none";
+  puntuacionTotal = 0;
+  actualizarPuntuacion();
+}
+
+const gameoverNuevaPartida = () => {
+  if (botonPlantarse.disabled && botonDarCarta.disabled) {
+  botonPlantarse.disabled = true;
+  botonDarCarta.disabled = true;
+  botonNuevaPartida.style.display= "block";
+  }
+}
 
 const handleNuevaPartida = () => {
   nuevaPartida();
+  gameoverNuevaPartida();
 }
+
 
 if (botonNuevaPartida) {
   botonNuevaPartida.addEventListener("click", handleNuevaPartida);
 }
+
+
+
+
+const handleSimular = () => {
+}
+
+const botonSimular = document.getElementById("simular") as HTMLButtonElement;
+  if (botonSimular) {
+    botonSimular.addEventListener("click", handleSimular);
+  }
+
+
 
 
 
