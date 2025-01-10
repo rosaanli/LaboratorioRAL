@@ -1,28 +1,36 @@
 
-#nuevaPartida {
-  display: none;
-}
-
-#simular {
-  visibility: hidden;
+#botones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
 }
 
 .copas {
 height: 200px;
-margin-left: 10px;
+margin: 25px;
+border-radius: 9px;
+}
+
+#nuevaPartida {
+  display: none;
 }
 
 #puntuacion {
   align-content: center;
+  justify-content: center;
   border-radius: 8px;
-    border: 1px solid transparent;
-    height: 100px;
-    width: 100px;
-    font-size: 1em;
-    background-color: indianred;
-
+  border: 1px solid transparent;
+  height: 50px;
+  width: 100px;
+  font-size: 1em;
+  background-color: #ffffff;
 }
 
+#simular {
+  display: none;
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -31,7 +39,7 @@ margin-left: 10px;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #020202;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -57,19 +65,25 @@ body {
   flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #36142a;
 }
 
 h1 {
-  color: indigo;
+  color: #ffffff;
   font-size: 3.2em;
   line-height: 1.1;
 }
 
 #app {
+  display: flex;
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 25px;
+  padding: 100px;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
 }
 
 .logo {

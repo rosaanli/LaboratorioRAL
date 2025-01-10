@@ -1,3 +1,5 @@
+//INICIO DE PARTIDA
+
 let puntuacionTotal:number = 0;
 
 const numeroAleatorio =() => {
@@ -80,6 +82,7 @@ const gameOver = () => {
     alert("Has perdido");
     botonDarCarta.disabled = true;
     botonPlantarse.disabled = true;
+    botonSimular.style.display = "none";
   }
 }
 
@@ -102,7 +105,7 @@ if (botonDarCarta) {
 }
 
 
-
+// PLANTARSE
 const mePlanto =(puntuacionTotal:number) => {
   if (puntuacionTotal <= 4) {
       alert("Has sido muy conservador eh");
@@ -116,7 +119,7 @@ const mePlanto =(puntuacionTotal:number) => {
       alert("Casi casi...");
   };
 
-  if (puntuacionTotal === 7.5) {
+  if (puntuacionTotal >=7.5) {
     alert("¡ Lo has clavado! ¡Enhorabuena!");
   };
 };
@@ -136,44 +139,9 @@ const botonPlantarse = document.getElementById("botonPlantarse") as HTMLButtonEl
     };
 
 
-const botonNuevaPartida = document.getElementById("nuevaPartida") as HTMLButtonElement;
-
-const verificarBotones = () => {
-  if (botonPlantarse.disabled && botonDarCarta.disabled) {
-    botonNuevaPartida.style.display = "block";
-  }
-}
-
-const nuevaPartida = () => {
-  botonPlantarse.disabled = false;
-  botonDarCarta.disabled = false;
-  botonNuevaPartida.style.display = "none";
-  puntuacionTotal = 0;
-  actualizarPuntuacion();
-}
-
-const gameoverNuevaPartida = () => {
-  if (botonPlantarse.disabled && botonDarCarta.disabled) {
-  botonPlantarse.disabled = true;
-  botonDarCarta.disabled = true;
-  botonNuevaPartida.style.display= "block";
-  }
-}
-
-const handleNuevaPartida = () => {
-  nuevaPartida();
-  gameoverNuevaPartida();
-}
-
-
-if (botonNuevaPartida) {
-  botonNuevaPartida.addEventListener("click", handleNuevaPartida);
-}
-
-
-
-
+//SIMULAR
 const handleSimular = () => {
+  handleSieteyMedia();
 }
 
 const botonSimular = document.getElementById("simular") as HTMLButtonElement;
@@ -182,6 +150,38 @@ const botonSimular = document.getElementById("simular") as HTMLButtonElement;
   }
 
 
+// BOTONES
+const verificarBotones = () => {
+  if (botonPlantarse.disabled && botonDarCarta.disabled) {
+    botonNuevaPartida.style.display = "block";
 
+  if (botonPlantarse.disabled && botonDarCarta.disabled && puntuacionTotal < 7.5) {
+    botonSimular.style.display = "block";
+    } else {
+      botonSimular.style.display = "none";
+    }
+  }
+}
+
+//NUEVA PARTIDA
+const nuevaPartida = () => {
+  pintaCarta("https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg");
+  botonPlantarse.disabled = false;
+  botonDarCarta.disabled = false;
+  botonNuevaPartida.style.display = "none";
+  botonSimular.style.display = "none";
+  puntuacionTotal = 0;
+  actualizarPuntuacion();
+}
+
+
+const handleNuevaPartida = () => {
+  nuevaPartida();
+}
+
+const botonNuevaPartida = document.getElementById("nuevaPartida") as HTMLButtonElement;
+if (botonNuevaPartida) {
+  botonNuevaPartida.addEventListener("click", handleNuevaPartida);
+}
 
 
