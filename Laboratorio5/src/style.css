@@ -1,16 +1,16 @@
 
 #botones {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 25px;
+  display: flex;
   flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
 }
 
 .copas {
-height: 200px;
-margin: 25px;
-border-radius: 9px;
+  border-radius: 9px;
+  height: 200px;
+  margin: 25px;
 }
 
 #nuevaPartida {
@@ -22,10 +22,10 @@ border-radius: 9px;
   justify-content: center;
   border-radius: 8px;
   border: 1px solid transparent;
-  height: 50px;
-  width: 100px;
   font-size: 1em;
+  height: 50px;
   background-color: #ffffff;
+  width: 100px;
 }
 
 #simular {
@@ -34,8 +34,9 @@ border-radius: 9px;
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 300;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
