@@ -107,8 +107,6 @@ if (botonDarCarta && botonDarCarta instanceof HTMLButtonElement) {
   botonDarCarta.addEventListener("click", handleSieteyMedia);
 }
 
-
-// PLANTARSE
 const mePlanto =(puntuacionTotal:number) => {
   if (puntuacionTotal <= 4) {
       alert("Has sido muy conservador eh");
@@ -142,7 +140,6 @@ if (botonPlantarse && botonPlantarse instanceof HTMLButtonElement) {
     };
 
 
-//SIMULAR
 const handleSimular = () => {
   handleSieteyMedia();
 }
@@ -153,7 +150,6 @@ const botonSimular = document.getElementById("simular") as HTMLButtonElement;
   }
 
 
-// BOTONES
 const verificarBotones = () => {
   if (botonPlantarse.disabled && botonDarCarta.disabled) {
     botonNuevaPartida.style.display = "block";
