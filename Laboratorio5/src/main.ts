@@ -39,7 +39,6 @@ const dameUrlCarta = (numeroDeCarta:number) => {
   }
 }
 
-
 const pintaCarta = (dameUrlCarta:string) =>{
   const cartaAPintar = document.getElementById("cartaPrincipal");
   if (cartaAPintar && cartaAPintar instanceof HTMLImageElement){
@@ -72,39 +71,71 @@ const mostrarPuntuacion = () => {
 document.addEventListener("DOMContentLoaded",mostrarPuntuacion)
 
 
-const gestionarPartida = () => {
-  if (puntuacionTotal >= 7.5) {
-    alert("Has perdido");
-    botonDarCarta.disabled = true;
+const onBotonPlantarse =() => {
+  if(botonPlantarse instanceof HTMLButtonElement){
+    botonPlantarse.disabled = false;
+    botonPlantarse.style.display = "block";
+  }
+}
+const offBotonPlantarse =()=> {
+  if(botonPlantarse instanceof HTMLButtonElement){
     botonPlantarse.disabled = true;
+  }
+}
+
+const onBotonDarCarta = () => {
+  if(botonDarCarta instanceof HTMLButtonElement){
+    botonDarCarta.disabled = false;
+  }
+}
+
+const offBotonDarCarta =() => {
+  if(botonDarCarta instanceof HTMLButtonElement){
+    botonDarCarta.disabled = true;
+  }
+}
+
+const mostrarBotonSimular =()=> {
+  if(botonSimular instanceof HTMLButtonElement){
+    botonSimular.style.display = "block";
+  }
+}
+const ocultarBotonSimular = () => {
+  if(botonSimular instanceof HTMLButtonElement){
     botonSimular.style.display = "none";
+  }
+}
+const offBotonNuevaPartida = ()=> {
+  if(botonNuevaPartida instanceof HTMLButtonElement){
+    botonNuevaPartida.disabled = true;
+  }
+};
+const mostrarBotonNuevaPartida =() => {
+  if (botonNuevaPartida instanceof HTMLButtonElement){
+    botonNuevaPartida.style.display = "block";
+  }
+}
+const ocultarBotonNuevaPartida =() => {
+  if (botonNuevaPartida instanceof HTMLButtonElement){
+    botonNuevaPartida.style.display = "none";
+  }
+}
+
+const gestionarPartida = () => {
+  if (puntuacionTotal > 7.5) {
+    alert("Has perdido");
+    offBotonDarCarta();
+    offBotonPlantarse();
+    ocultarBotonSimular();
+    mostrarBotonNuevaPartida();
   }
   if(puntuacionTotal === 7.5){
-    alert("¡Lo has clavado! ¡Enhorabuena!");
-    botonDarCarta.disabled = true;
-    botonPlantarse.disabled = true;
-    botonSimular.style.display = "none";
+    alert("Has ganado!");
+    offBotonDarCarta();
+    offBotonPlantarse();
+    ocultarBotonSimular()
+    mostrarBotonNuevaPartida();
   }
-}
-
-
-const handleSieteyMedia =()=>{
-  const generaNumero = numeroAleatorio();
-  const dameNumeroDeCarta=numeroDeCarta(generaNumero);
-  const urlCarta = dameUrlCarta(dameNumeroDeCarta);
-  pintaCarta(urlCarta);
-  const puntosCarta = obtenerPuntuacion(dameNumeroDeCarta);
-  const puntosSumados=sumaPuntuacion(puntosCarta);
-  actualizarPuntuacionTotal(puntosSumados);
-  mostrarPuntuacion();
-  gestionarPartida();
-  verificarBotones();
-}
-
-
-const botonDarCarta = document.getElementById("botonDarCarta") as HTMLButtonElement;
-if (botonDarCarta && botonDarCarta instanceof HTMLButtonElement) {
-  botonDarCarta.addEventListener("click", handleSieteyMedia);
 }
 
 const mePlanto =(puntuacionTotal:number) => {
@@ -125,61 +156,61 @@ const mePlanto =(puntuacionTotal:number) => {
   };
 };
 
+const handleSieteyMedia =()=>{
+  const generaNumero = numeroAleatorio();
+  const dameNumeroDeCarta=numeroDeCarta(generaNumero);
+  const urlCarta = dameUrlCarta(dameNumeroDeCarta);
+  pintaCarta(urlCarta);
+  const puntosCarta = obtenerPuntuacion(dameNumeroDeCarta);
+  const puntosSumados=sumaPuntuacion(puntosCarta);
+  actualizarPuntuacionTotal(puntosSumados);
+  mostrarPuntuacion();
+  onBotonPlantarse();
+  gestionarPartida();
+}
 
 const handlePlantarse = () => {
   mePlanto(puntuacionTotal);
-  botonPlantarse.disabled = true;
-  botonDarCarta.disabled = true;
-  verificarBotones();
+  offBotonPlantarse();
+  offBotonDarCarta();
+  mostrarBotonSimular();
+  mostrarBotonNuevaPartida();
 }
-
-
-const botonPlantarse = document.getElementById("botonPlantarse") as HTMLButtonElement;
-if (botonPlantarse && botonPlantarse instanceof HTMLButtonElement) {
-    botonPlantarse.addEventListener("click", handlePlantarse);
-    };
-
 
 const handleSimular = () => {
   handleSieteyMedia();
-}
-
-const botonSimular = document.getElementById("simular") as HTMLButtonElement;
-  if (botonSimular && botonSimular instanceof HTMLButtonElement) {
-    botonSimular.addEventListener("click", handleSimular);
-  }
-
-
-const verificarBotones = () => {
-  if (botonPlantarse.disabled && botonDarCarta.disabled) {
-    botonNuevaPartida.style.display = "block";
-
-  if (botonPlantarse.disabled && botonDarCarta.disabled && puntuacionTotal < 7.5) {
-    botonSimular.style.display = "block";
-    } else {
-      botonSimular.style.display = "none";
-    }
-  }
-}
-
-const nuevaPartida = () => {
-  pintaCarta("https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg");
-  botonPlantarse.disabled = false;
-  botonDarCarta.disabled = false;
-  botonNuevaPartida.style.display = "none";
-  botonSimular.style.display = "none";
-  puntuacionTotal = 0;
-  mostrarPuntuacion();
+  offBotonPlantarse();
+  gestionarPartida();
 }
 
 
 const handleNuevaPartida = () => {
-  nuevaPartida();
+  pintaCarta("https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg");
+  onBotonDarCarta();
+  ocultarBotonNuevaPartida();
+  ocultarBotonSimular();
+  puntuacionTotal = 0;
+  mostrarPuntuacion();
+  gestionarPartida();
 }
 
-const botonNuevaPartida = document.getElementById("nuevaPartida") as HTMLButtonElement;
+const botonDarCarta = document.getElementById("botonDarCarta") as HTMLButtonElement;
+if (botonDarCarta && botonDarCarta instanceof HTMLButtonElement) {
+  botonDarCarta.addEventListener("click", handleSieteyMedia);
+}
+
+const botonPlantarse = document.getElementById("botonPlantarse");
+if (botonPlantarse && botonPlantarse instanceof HTMLButtonElement) {
+    botonPlantarse.addEventListener("click", handlePlantarse);
+    };
+
+const botonNuevaPartida = document.getElementById("nuevaPartida");
 if (botonNuevaPartida  && botonNuevaPartida instanceof HTMLButtonElement) {
   botonNuevaPartida.addEventListener("click", handleNuevaPartida);
 }
 
+const botonSimular = document.getElementById("simular");
+  if (botonSimular && botonSimular instanceof HTMLButtonElement) {
+    botonSimular.addEventListener("click", handleSimular);
+  }
 

@@ -17,6 +17,10 @@
   display: none;
 }
 
+#botonPlantarse {
+  display: none;
+}
+
 #puntuacion {
   align-content: center;
   justify-content: center;
