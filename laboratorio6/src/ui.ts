@@ -138,11 +138,7 @@ const ocultarBotonSimular = () => {
     botonSimular.style.display = "none";
   }
 }
-// const offBotonNuevaPartida = ()=> {
-//   if(botonNuevaPartida instanceof HTMLButtonElement){
-//     botonNuevaPartida.disabled = true;
-//   }
-// };
+
 const mostrarBotonNuevaPartida =() => {
   if (botonNuevaPartida instanceof HTMLButtonElement){
     botonNuevaPartida.style.display = "block";
