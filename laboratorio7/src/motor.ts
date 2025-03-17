@@ -1,5 +1,5 @@
 import {
-  puntuacion
+  partida
 } from './modelo';
 
 //testear ok
@@ -53,9 +53,18 @@ export const numeroDeCarta = (numeroAleatorio:number) :number => {
 }
 
   export const sumaPuntuacion = (puntosCarta:number) :number => {
-  return puntosCarta + puntuacion.puntuacionTotal;
+  return puntosCarta + partida.puntuacionTotal;
 }
 
   export const actualizarPuntuacionTotal = (puntosSumados:number) => {
-  puntuacion.puntuacionTotal = puntosSumados;
+  partida.puntuacionTotal = puntosSumados;
+}
+
+export const gestionarEstadoPartida = () => {
+  if (partida.puntuacionTotal===7.5){
+    partida.estadoPartida="ganar";
+  } else if (partida.puntuacionTotal > 7.5){
+    partida.estadoPartida ="perder";
+  }
+  return partida.estadoPartida;
 }

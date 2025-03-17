@@ -4,11 +4,12 @@ import {
   obtenerPuntuacion,
   sumaPuntuacion,
   actualizarPuntuacionTotal,
-  numeroAleatorio
+  numeroAleatorio,
+  gestionarEstadoPartida,
 } from './motor';
 
 import {
-  puntuacion
+  partida
 } from './modelo';
 
 export const botonDarCarta = document.getElementById("botonDarCarta");
@@ -27,7 +28,7 @@ export const pintaCarta = (dameUrlCarta:string) =>{
 export const mostrarPuntuacion = () => {
   const puntuacionDiv= document.getElementById("puntuacion");
   if (puntuacionDiv){
-    puntuacionDiv.innerHTML = puntuacion.puntuacionTotal.toString();
+    puntuacionDiv.innerHTML = partida.puntuacionTotal.toString();
   }
 }
 
@@ -53,7 +54,7 @@ const offBotonDarCarta =() => {
 }
 
   export const handlePlantarse = () => {
-  mePlanto(puntuacion.puntuacionTotal);
+  mePlanto(partida.puntuacionTotal);
   offBotonPlantarse();
   offBotonDarCarta();
   mostrarBotonSimular();
@@ -72,7 +73,8 @@ const offBotonDarCarta =() => {
   onBotonDarCarta();
   ocultarBotonNuevaPartida();
   ocultarBotonSimular();
-  puntuacion.puntuacionTotal = 0;
+  partida.puntuacionTotal = 0;
+  partida.estadoPartida="seguir_jugando";
   mostrarPuntuacion();
   gestionarPartida();
 }
@@ -119,14 +121,14 @@ const ocultarBotonNuevaPartida =() => {
 }
 
 export const gestionarPartida = () => {
-  if (puntuacion.puntuacionTotal > 7.5) {
+  if (gestionarEstadoPartida()==="perder") {
     alert("Has perdido");
     offBotonDarCarta();
     offBotonPlantarse();
     ocultarBotonSimular();
     mostrarBotonNuevaPartida();
   }
-  if(puntuacion.puntuacionTotal === 7.5){
+  if(gestionarEstadoPartida()==="ganar"){
     alert("Has ganado!");
     offBotonDarCarta();
     offBotonPlantarse();

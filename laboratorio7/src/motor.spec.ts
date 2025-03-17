@@ -1,4 +1,5 @@
-import {numeroDeCarta,numeroAleatorio, obtenerPuntuacion} from "./motor";
+import { EstadoPartida, partida } from "./modelo";
+import {numeroDeCarta,numeroAleatorio, obtenerPuntuacion, gestionarEstadoPartida} from "./motor";
 import {vi} from "vitest";
 
 describe ("numeroAleatorio", () => {
@@ -62,4 +63,34 @@ describe ("obtenerPuntuacion", () => {
   })
 });
 
+describe ("gestionarEstadoPartida", ()=>{
+  it ("Debería devolver seguir jugando cuando la puntuacionTotal sea menor a 7.5", ()=>{
+    //arrange
+    const resultadoEsperado: EstadoPartida = "seguir_jugando";
+    vi.spyOn(partida,"puntuacionTotal", "get").mockReturnValue(5);
+    //act
+    const resultado = gestionarEstadoPartida();
+    //assert
+    expect(resultado).toBe(resultadoEsperado);
+  })
 
+  it ("Debería de devolcer ganar cuando la puntuacuionTotal sea === 7.5", ()=>{
+    //arrange
+    const resultadoEsperado : EstadoPartida = "ganar";
+    vi.spyOn(partida,"puntuacionTotal", "get").mockReturnValue(7.5);
+    //act
+    const resultado = gestionarEstadoPartida();
+    //assert
+    expect(resultado).toBe(resultadoEsperado);
+  })
+
+  it ("Debería de devoler perder cuando la puntuacuionTotal sea > 7.5", ()=>{
+    //arrange
+    const resultadoEsperado : EstadoPartida = "perder";
+    vi.spyOn(partida,"puntuacionTotal", "get").mockReturnValue(8);
+    //act
+    const resultado = gestionarEstadoPartida();
+    //assert
+    expect(resultado).toBe(resultadoEsperado);
+  })
+})
