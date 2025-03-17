@@ -74,12 +74,7 @@ document.addEventListener("DOMContentLoaded",mostrarPuntuacion)
 const onBotonPlantarse =() => {
   if(botonPlantarse instanceof HTMLButtonElement){
     botonPlantarse.disabled = false;
-    botonPlantarse.style.display = "block";
-  }
-}
-const offBotonPlantarse =()=> {
-  if(botonPlantarse instanceof HTMLButtonElement){
-    botonPlantarse.disabled = true;
+    botonPlantarse.style.display = "none";
   }
 }
 
@@ -95,26 +90,24 @@ const offBotonDarCarta =() => {
   }
 }
 
-const mostrarBotonSimular =()=> {
-  if(botonSimular instanceof HTMLButtonElement){
-    botonSimular.style.display = "block";
+const offBotonPlantarse =()=> {
+  if(botonPlantarse instanceof HTMLButtonElement){
+    botonPlantarse.disabled = true;
   }
 }
-const ocultarBotonSimular = () => {
-  if(botonSimular instanceof HTMLButtonElement){
-    botonSimular.style.display = "none";
-  }
-}
+
 const offBotonNuevaPartida = ()=> {
   if(botonNuevaPartida instanceof HTMLButtonElement){
     botonNuevaPartida.disabled = true;
   }
 };
-const mostrarBotonNuevaPartida =() => {
-  if (botonNuevaPartida instanceof HTMLButtonElement){
-    botonNuevaPartida.style.display = "block";
+
+const ocultarBotonSimular = () => {
+  if(botonSimular instanceof HTMLButtonElement){
+    botonSimular.style.display = "none";
   }
 }
+
 const ocultarBotonNuevaPartida =() => {
   if (botonNuevaPartida instanceof HTMLButtonElement){
     botonNuevaPartida.style.display = "none";
@@ -122,19 +115,17 @@ const ocultarBotonNuevaPartida =() => {
 }
 
 const gestionarPartida = () => {
-  if (puntuacionTotal > 7.5) {
+  if (puntuacionTotal >= 7.5) {
     alert("Has perdido");
     offBotonDarCarta();
     offBotonPlantarse();
-    ocultarBotonSimular();
-    mostrarBotonNuevaPartida();
+    ocultarBotonSimular()
   }
   if(puntuacionTotal === 7.5){
     alert("Has ganado!");
     offBotonDarCarta();
     offBotonPlantarse();
     ocultarBotonSimular()
-    mostrarBotonNuevaPartida();
   }
 }
 
@@ -167,31 +158,49 @@ const handleSieteyMedia =()=>{
   mostrarPuntuacion();
   onBotonPlantarse();
   gestionarPartida();
+  verificarBotones();
 }
+
+const verificarBotones = () => {
+  if (
+    botonNuevaPartida instanceof HTMLButtonElement &&
+    botonPlantarse instanceof HTMLButtonElement &&
+    botonDarCarta instanceof HTMLButtonElement
+  ) {
+    if (botonDarCarta.disabled && botonPlantarse.disabled && botonSimular) {
+      botonSimular.style.display = "block";
+      botonNuevaPartida.style.display = "block";
+    } else {
+      ocultarBotonSimular();
+      ocultarBotonNuevaPartida();
+    }
+  }
+};
 
 const handlePlantarse = () => {
   mePlanto(puntuacionTotal);
   offBotonPlantarse();
   offBotonDarCarta();
-  mostrarBotonSimular();
-  mostrarBotonNuevaPartida();
+  verificarBotones();
 }
 
 const handleSimular = () => {
   handleSieteyMedia();
-  offBotonPlantarse();
-  gestionarPartida();
 }
 
-
-const handleNuevaPartida = () => {
+const nuevaPartida = () => {
   pintaCarta("https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg");
+  onBotonPlantarse();
   onBotonDarCarta();
   ocultarBotonNuevaPartida();
   ocultarBotonSimular();
   puntuacionTotal = 0;
   mostrarPuntuacion();
-  gestionarPartida();
+}
+
+
+const handleNuevaPartida = () => {
+  nuevaPartida();
 }
 
 const botonDarCarta = document.getElementById("botonDarCarta") as HTMLButtonElement;
