@@ -1,4 +1,4 @@
-import {EstadoPartida} from "./public/main"
+import {EstadoPartida} from "../main";
 
 //INTERFACES
 export interface InfoCarta {

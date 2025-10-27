@@ -23,7 +23,7 @@ export const cartasCopiadas = (cartas: Carta[]) => {
   }));
 };
 
-//Esta va en Motor
+// En el motor nos va a hacer falta un método para barajar cartas
 const barajarCartas = (cartas : Carta[]): Carta[] => {
     // Fisher-Yates (in-place)
     for (let i = cartas.length - 1; i > 0; i--) {
@@ -57,8 +57,8 @@ export type EstadoPartida =
 
 
 
-// En el motor nos va a hacer falta un método para barajar cartas
 
+//MOTOR
 /*
   Una carta se puede voltear si no está encontrada y no está ya volteada, o no hay dos cartas ya volteadas
 */
