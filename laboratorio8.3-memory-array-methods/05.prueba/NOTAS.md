@@ -39,3 +39,10 @@ const cajaDeTexto: Caja<string> = { contenido: "texto" };
 ```
 
 Así puedes reutilizar código y mantener la seguridad de tipos.
+
+
+
+
+
+DIRECCION DE DEPENDENCIAS:
+Mantén la dirección de dependencias: main → ui/motor/modelo; ui → motor/modelo; motor → modelo; modelo → nadie.

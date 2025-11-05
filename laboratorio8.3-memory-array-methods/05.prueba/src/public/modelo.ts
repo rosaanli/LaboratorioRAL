@@ -1,13 +1,11 @@
-import {EstadoPartida} from "../main";
-
-export const partida : Partida = {
-  numeroDeIntentos: 0
-};
-
 
 //INTERFACES
 export interface Partida {
   numeroDeIntentos: number;
+};
+
+export interface BloquearPartida {
+  estaBloqueadaLaInteraccion: boolean;
 };
 
 export interface InfoCarta {
@@ -29,6 +27,19 @@ export interface Tablero {
   indiceCartaVolteadaA?: number;
   indiceCartaVolteadaB?: number;
 }
+
+/*
+  Aquí definimos el tipo de estado de la partida, la idea es que cuando empiece la partida todas las cartas estén boca abajo y si se hacen click sobre ellas no se volteen.
+  EstadoPartida = "PartidaNoIniciada", una vez que se pulse Iniciar partida el estado de la partida cambiaría a "CeroCartasLevantadas" y así sucesivamente.
+*/
+//TYPES DE DATOS
+export type EstadoPartida =
+  | "PartidaNoIniciada"
+  | "CeroCartasLevantadas"
+  | "UnaCartaLevantada"
+  | "DosCartasLevantadas"
+  | "PartidaCompleta";
+
 
 //DATOS INICIALES
 export const infoCartas: InfoCarta[] = [
@@ -65,6 +76,8 @@ export const infoCartas: InfoCarta[] = [
   }
 ];
 
+
+
 //
 export const crearCartaInicial = (idFoto: number, imagen: string): Carta => ({
   idFoto,
@@ -73,9 +86,39 @@ export const crearCartaInicial = (idFoto: number, imagen: string): Carta => ({
   encontrada: false,
 });
 
+export const crearColeccionDeCartasInicial = (infoCartas: InfoCarta[]): Carta[] => {
+  /* Aquí crearemos un array de cartas a partir de un array de infoCartas
+     y duplicaremos las cartas para que haya dos de cada tipo.
+  */
+  let coleccionCartas: Carta[] = [];
+  infoCartas.forEach((infocarta) => {
+    coleccionCartas.push(crearCartaInicial(infocarta.idFoto, infocarta.imagen));
+    coleccionCartas.push(crearCartaInicial(infocarta.idFoto, infocarta.imagen));
+  });
+  return coleccionCartas;
+};
 
-/*
-  Aquí definimos el tipo de estado de la partida, la idea es que cuando empiece la partida todas las cartas estén boca abajo y si se hacen click sobre ellas no se volteen.
-  EstadoPartida = "PartidaNoIniciada", una vez que se pulse Iniciar partida el estado de la partida cambiaría a "CeroCartasLevantadas" y así sucesivamente.
-*/
+export let cartas: Carta[] = crearColeccionDeCartasInicial(infoCartas);
+
+export const cartasCopiadas = (cartas: Carta[]) => {
+  return cartas.map((carta) => ({
+    ...carta,
+  }));
+};
+
+export const crearTableroInicial = (cartas: Carta[]): Tablero => ({
+  cartas: cartas.map((c) => ({ ...c, estaVuelta: false, encontrada: false })), // clones independientes
+  estadoPartida: "PartidaNoIniciada",
+  indiceCartaVolteadaA: undefined,
+  indiceCartaVolteadaB: undefined,
+});
+
+export const partida: Partida = {
+  numeroDeIntentos: 0,
+};
+
+export const bloquearPartida = {
+  estaBloqueadaLaInteraccion: false,
+};
+
 
