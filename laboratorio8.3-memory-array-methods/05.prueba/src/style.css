@@ -1,4 +1,3 @@
-
 body {
   margin: 0;
   display: flex;
@@ -6,9 +5,19 @@ body {
   flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 20%, hsl(53, 92%, 81%) 0%, #ffffff 40%, #d5a2dc 100%),
+    radial-gradient(circle at 80% 80%, #a0c4ff 0%, #ffffff 30%, #b9fbc0 100%);
 }
 
-#app {
+h1 {
+  font-family: 'DynaPuff', cursive;
+  font-size: 6rem;
+  color: #333;
+  margin: 20px 0;
+}
+
+#tablero {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -19,26 +28,47 @@ body {
 }
 
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
-}
 
 .card {
-  padding: 2em;
+  align-items: center;
+  background-color: #6aa8ff;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #4cbfd6;
-  border: 1px solid #86f5fd;
-  padding: 20px;
-  border-radius: 20px;
-  width: 150px;
   height: 150px;
+  justify-content: center;
+  padding: 20px;
+  width: 150px;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+      will-change: transform;
+  /* Evita que aparezca el cursor de texto/caret dentro de las cartas */
+  caret-color: transparent;
 }
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: opacity 260ms ease, transform 260ms ease;
+  opacity: 0;
+  transform: scale(0.96);
+}
+.card.revealed img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card.revealed {
+  animation: pop 220ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.card:hover {
+  transition: 0.50s;
+  background-color: #95d9e6;
+  cursor: pointer;
+}
+
 
 #botones {
   display: flex;
@@ -57,13 +87,40 @@ button {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #a760e0;
   cursor: pointer;
-  transition: border-color 0.25s;
 }
 
 button:hover {
   border-color: #646cff;
+  transform: translateY(-3px) scale(1.02);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+
+#iniciar-partida {
+  border-radius: 50%;
+  font-family: 'DynaPuff', cursive;
+  font-weight: lighter;
+  font-size: 2em;
+  height: 10em;
+  width: 10em;
+    display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+}
+
+
+.contador {
+  border-radius: 8px;
+  color: #ffffff;
+  display: none;
+  margin-left: 20px;
+  padding: 0.6em 1.2em;
+  font-size: 1.5em;
+  font-weight: 500;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e08460;
+  cursor: default;
+}
+
+.no-click {
+  pointer-events: none;
 }

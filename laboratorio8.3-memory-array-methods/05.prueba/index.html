@@ -5,49 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="stylesheet" href="./src/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
     <title>Laboratorio Modulo 8.3. 3</title>
   </head>
   <body>
-    <div id="app">
-      <div class="card" id="card1">
-        <img src="" alt="" id="animal1" />
-      </div>
-      <div class="card" id="card2">
-        <img src="" alt="" id="animal2" />
-      </div>
-      <div class="card" id="card3">
-        <img src="" alt="" id="animal3" />
-      </div>
-      <div class="card" id="card4">
-        <img src="" alt="" id="animal4" />
-      </div>
-      <div class="card" id="card5">
-        <img src="" alt="" id="animal5" />
-      </div>
-      <div class="card" id="card6">
-        <img src="" alt="" id="animal6" />
-      </div>
-      <div class="card" id="card7">
-        <img src="" alt="" id="animal7" />
-      </div>
-      <div class="card" id="card8">
-        <img src="" alt="" id="animal8" />
-      </div>
-      <div class="card" id="card9">
-        <img src="" alt="" id="animal9" />
-      </div>
-      <div class="card" id="card10">
-        <img src="" alt="" id="animal10" />
-      </div>
-      <div class="card" id="card11">
-        <img src="" alt="" id="animal11" />
-      </div>
-      <div class="card" id="card12">
-        <img src="" alt="" id="animal12" />
-      </div>
+    <h1>MEMORY GAME</h1>
+    <div id="tablero">
     </div>
     <div id="botones">
-      <button id="iniciarPartida">Iniciar Partida</button>
+      <button id="iniciar-partida">Iniciar Partida</button>
+      <button id="reiniciar-partida" style="display: none;">Reiniciar Partida</button>
+      <div class="contador" id="contador">0</div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

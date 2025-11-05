@@ -1,6 +1,15 @@
 import {EstadoPartida} from "../main";
 
+export const partida : Partida = {
+  numeroDeIntentos: 0
+};
+
+
 //INTERFACES
+export interface Partida {
+  numeroDeIntentos: number;
+};
+
 export interface InfoCarta {
   idFoto: number;
   imagen: string;
