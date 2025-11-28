@@ -1,4 +1,4 @@
-import {Carta, Tablero} from "../public/modelo"
+import {Carta, Tablero} from "../memory/modelo"
 
 export const barajarCartas = (cartas : Carta[]): Carta[] => {
     // Fisher-Yates (in-place)

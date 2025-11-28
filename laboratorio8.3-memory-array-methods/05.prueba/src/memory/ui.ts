@@ -1,6 +1,6 @@
 
 import { divContador, divTablero, botonReiniciarPartida, botonIniciarPartida } from "./constantes";
-import { partida, Tablero, cartasCopiadas, cartas, } from "../public/modelo";
+import { partida, Tablero, cartasCopiadas, cartas, } from "./modelo";
 import { sePuedeVoltearLaCarta, sonPareja, barajarCartas, partidaCompleta, voltearLaCarta, parejaEncontrada, parejaNoEncontrada} from "./motor";
 
 

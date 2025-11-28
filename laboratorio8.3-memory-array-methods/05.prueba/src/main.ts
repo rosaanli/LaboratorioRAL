@@ -1,6 +1,6 @@
-import { reiniciarPartida, iniciaPartida } from "./public/ui";
-import { crearTableroInicial, Tablero, cartasCopiadas, cartas } from "./public/modelo";
-import { barajarCartas } from "./public/motor";
+import { reiniciarPartida, iniciaPartida } from "./memory/ui";
+import { crearTableroInicial, Tablero, cartasCopiadas, cartas } from "./memory/modelo";
+import { barajarCartas } from "./memory/motor";
 
 
 document.addEventListener("DOMContentLoaded", () => {
