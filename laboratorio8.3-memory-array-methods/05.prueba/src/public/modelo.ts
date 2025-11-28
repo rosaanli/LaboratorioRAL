@@ -4,10 +4,6 @@ export interface Partida {
   numeroDeIntentos: number;
 };
 
-export interface BloquearPartida {
-  estaBloqueadaLaInteraccion: boolean;
-};
-
 export interface InfoCarta {
   idFoto: number;
   imagen: string;
@@ -39,7 +35,6 @@ export type EstadoPartida =
   | "UnaCartaLevantada"
   | "DosCartasLevantadas"
   | "PartidaCompleta";
-
 
 //DATOS INICIALES
 export const infoCartas: InfoCarta[] = [
@@ -76,9 +71,6 @@ export const infoCartas: InfoCarta[] = [
   }
 ];
 
-
-
-//
 export const crearCartaInicial = (idFoto: number, imagen: string): Carta => ({
   idFoto,
   imagen,
@@ -87,15 +79,10 @@ export const crearCartaInicial = (idFoto: number, imagen: string): Carta => ({
 });
 
 export const crearColeccionDeCartasInicial = (infoCartas: InfoCarta[]): Carta[] => {
-  /* Aquí crearemos un array de cartas a partir de un array de infoCartas
-     y duplicaremos las cartas para que haya dos de cada tipo.
-  */
-  let coleccionCartas: Carta[] = [];
-  infoCartas.forEach((infocarta) => {
-    coleccionCartas.push(crearCartaInicial(infocarta.idFoto, infocarta.imagen));
-    coleccionCartas.push(crearCartaInicial(infocarta.idFoto, infocarta.imagen));
-  });
-  return coleccionCartas;
+   const cartasTransformadas = infoCartas.map((carta) => {
+    return crearCartaInicial(carta.idFoto, carta.imagen)
+ })
+  return [...cartasTransformadas, ...cartasTransformadas]
 };
 
 export let cartas: Carta[] = crearColeccionDeCartasInicial(infoCartas);
@@ -115,10 +102,6 @@ export const crearTableroInicial = (cartas: Carta[]): Tablero => ({
 
 export const partida: Partida = {
   numeroDeIntentos: 0,
-};
-
-export const bloquearPartida = {
-  estaBloqueadaLaInteraccion: false,
 };
 
 

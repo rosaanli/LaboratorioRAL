@@ -3,11 +3,10 @@ import { crearTableroInicial, Tablero, cartasCopiadas, cartas } from "./public/m
 import { barajarCartas } from "./public/motor";
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  let cartasBarajadas = barajarCartas(cartasCopiadas(cartas));
+  let tablero: Tablero = crearTableroInicial(cartasBarajadas);
 
-export let cartasBarajadas = barajarCartas(cartasCopiadas(cartas));
-
-export let tablero: Tablero = crearTableroInicial(cartasBarajadas);
-
-
-reiniciarPartida(tablero);
-iniciaPartida(tablero);
+  reiniciarPartida(tablero);
+  iniciaPartida(tablero);
+});
