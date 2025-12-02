@@ -1,4 +1,4 @@
-import {calculaIvaProducto, calcularIvaPorcantidadProducto, calcularTotalticket, calcularTotalTipoIva} from "./ticket.helpers";
+import {calculaIvaUnidadProducto, calcularIvaPorCantidad, calcularTotalticket, calcularTotalTipoIva} from "./ticket.helpers";
 import {LineaTicket, Producto, TotalPorTipoIva} from "./model";
 
 describe("calculaIvaProducto", () =>{
@@ -10,7 +10,7 @@ describe("calculaIvaProducto", () =>{
       tipoIva: "superreducidoA",
   }
   //act
-  const resultado = calculaIvaProducto(producto);
+  const resultado = calculaIvaUnidadProducto(producto);
   //assert
   const esperado = {
     nombre : "Lasaña",
@@ -34,7 +34,7 @@ describe("calcularIvaPorcantidadProducto", () =>{
       cantidad: 3
     };
     //act
-    const resultado = calcularIvaPorcantidadProducto(producto);
+    const resultado = calcularIvaPorCantidad(producto);
 
     //assert
     const esperado = {
@@ -58,7 +58,7 @@ describe("calcularIvaPorcantidadProducto", () =>{
     cantidad: 6,
   }
     //act
-    const resultado = calcularIvaPorcantidadProducto(producto);
+    const resultado = calcularIvaPorCantidad(producto);
 
     //assert
     const esperado = {
@@ -82,7 +82,7 @@ describe("calcularIvaPorcantidadProducto", () =>{
     cantidad: 2,
   }
     //act
-    const resultado = calcularIvaPorcantidadProducto(producto);
+    const resultado = calcularIvaPorCantidad(producto);
 
     //assert
     const esperado = {

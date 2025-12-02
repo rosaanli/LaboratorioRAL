@@ -1,7 +1,7 @@
 import { LineaTicket, Producto, ResultadoLineaTicket, TotalPorTipoIva  } from "./model"
 import {ImporteTipoIva} from "./constantes"
 
-export const calculaIvaProducto = (producto : Producto) => {
+export const calculaIvaUnidadProducto = (producto : Producto) => {
   const {nombre, precio, tipoIva } = producto;
   const ivaInfo = ImporteTipoIva.find(iva => iva.tipo === tipoIva);
 
@@ -14,11 +14,11 @@ export const calculaIvaProducto = (producto : Producto) => {
 };
 
 
-export const calcularIvaPorcantidadProducto = (lineaProducto: LineaTicket) : ResultadoLineaTicket => {
-  /*
-  const {producto {nombre, precio, tipoIva}, cantidad} = lineaProducto;
+export const calcularIvaPorCantidad = (lineaProducto: LineaTicket) : ResultadoLineaTicket => {
+  /* DUDAS CON DESTRUCTURING - Intento hacer destructuring anidado pro no funciona bien*/
+  const {producto: {nombre, precio, tipoIva}, cantidad} = lineaProducto;
 
-  const ivaUnidadProducto = calculaIvaProducto(lineaProducto);
+  const ivaUnidadProducto = calculaIvaUnidadProducto(lineaProducto.producto);
   const ivaTotalproductos = ivaUnidadProducto.iva * cantidad;
 
   const precioTotalConIva = precio * cantidad + ivaTotalproductos;
@@ -31,7 +31,7 @@ export const calcularIvaPorcantidadProducto = (lineaProducto: LineaTicket) : Res
     precioConIva: precioTotalConIva,
   };
 
-  */
+  /* Forma sin destructuring anidado
   const unidadProducto = lineaProducto.producto;
   const cantidad = lineaProducto.cantidad;
 
@@ -48,6 +48,7 @@ export const calcularIvaPorcantidadProducto = (lineaProducto: LineaTicket) : Res
     tipoIva: unidadProducto.tipoIva,
     precioConIva: precioTotalConIva,
   };
+  */
 };
 
 
@@ -57,7 +58,7 @@ export const calcularTotalticket = (lineasTicket: LineaTicket[]) => {
   let totalIva = 0;
 
   lineasTicket.forEach(linea => {
-    const resultado = calcularIvaPorcantidadProducto(linea);
+    const resultado = calcularIvaPorCantidad(linea);
     totalSinIva = totalSinIva + resultado.precioSinIva;
     totalConIva = totalConIva + resultado.precioConIva;
     totalIva = Number((totalConIva - totalSinIva).toFixed(2));
@@ -71,9 +72,8 @@ export const calcularTotalticket = (lineasTicket: LineaTicket[]) => {
 };
 
 const ivaPorTipo = (linea: LineaTicket) : number => {
-  return Number((calcularIvaPorcantidadProducto(linea).precioConIva - calcularIvaPorcantidadProducto(linea).precioSinIva).toFixed(2));
+  return Number((calcularIvaPorCantidad(linea).precioConIva - calcularIvaPorCantidad(linea).precioSinIva).toFixed(2));
 };
-
 
 
 export const calcularTotalTipoIva = (lineasTicket: LineaTicket[]) : TotalPorTipoIva[]=> {
@@ -87,6 +87,7 @@ export const calcularTotalTipoIva = (lineasTicket: LineaTicket[]) : TotalPorTipo
     { tipoIva: "sinIva", cuantia: 0 },
   ];
 
+// TODO: Preguntar como hacer esto sin indicar la posicion numerica del array o sin switch
   for (let i=0; i < lineasTicket.length; i++) {
     const iva = ivaPorTipo(lineasTicket[i]);
 
