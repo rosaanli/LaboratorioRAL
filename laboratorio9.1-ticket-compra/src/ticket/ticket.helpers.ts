@@ -1,122 +1,119 @@
-import { LineaTicket, Producto, ResultadoLineaTicket, TotalPorTipoIva  } from "./model"
-import {ImporteTipoIva} from "./constantes"
+import { LineaTicket, Producto, ResultadoLineaTicket, TotalPorTipoIva, TipoIva  } from "./model"
+import {listaTiposIva} from "./constantes"
 
 export const calculaIvaUnidadProducto = (producto : Producto) => {
   const {nombre, precio, tipoIva } = producto;
-  const ivaInfo = ImporteTipoIva.find(iva => iva.tipo === tipoIva);
+  const ivaPorcentaje = obtenerIvaPorTipoIva(tipoIva);
 
-  if (ivaInfo) {
-    const porcentaje = ivaInfo.porcentaje;
-    return {nombre, precio, iva: precio * porcentaje /100}
+  if (ivaPorcentaje) {
+    return {
+      nombre,
+      precio,
+      iva: precio * ivaPorcentaje
+    }
   } else {
   return {nombre, precio, iva: 0};
   };
 };
 
+const calcularPrecioProductos = (lineaProducto: LineaTicket) : number => {
+  const {producto: {precio}, cantidad} = lineaProducto;
+  return precio * cantidad;
+};
 
-export const calcularIvaPorCantidad = (lineaProducto: LineaTicket) : ResultadoLineaTicket => {
-  /* DUDAS CON DESTRUCTURING - Intento hacer destructuring anidado pro no funciona bien*/
-  const {producto: {nombre, precio, tipoIva}, cantidad} = lineaProducto;
+export const calcularIvaProductos = (lineaProducto: LineaTicket) : number => {
+  const {cantidad, producto} = lineaProducto;
+  const ivaUnidadProducto = calculaIvaUnidadProducto(producto);
 
-  const ivaUnidadProducto = calculaIvaUnidadProducto(lineaProducto.producto);
-  const ivaTotalproductos = ivaUnidadProducto.iva * cantidad;
+  const ivaProductos = Number((ivaUnidadProducto.iva * cantidad).toFixed(2));
+  return ivaProductos;
+};
 
-  const precioTotalConIva = precio * cantidad + ivaTotalproductos;
+export const precioConIvaProductos = (lineaProducto: LineaTicket) : number => {
+  return calcularPrecioProductos(lineaProducto) + calcularIvaProductos(lineaProducto);
+}
+
+// const ivaCuantiaPorTipo = (linea: LineaTicket): number => {
+//   return Number((calcularIvaPorCantidad(linea).precioConIva - calcularIvaPorCantidad(linea).precioSinIva).toFixed(2));
+// };
+
+
+export const infoIvaproductos = (lineaProducto: LineaTicket) : ResultadoLineaTicket => {
+
+  const {producto: {nombre, tipoIva}, cantidad} = lineaProducto;
+
+  const precioProductosSinIva = calcularPrecioProductos(lineaProducto);
+  const precioProductosConIva = precioConIvaProductos(lineaProducto);
 
     return {
     nombre: nombre,
     cantidad: cantidad,
-    precioSinIva: precio * cantidad,
+    precioSinIva: precioProductosSinIva,
     tipoIva: tipoIva,
-    precioConIva: precioTotalConIva,
+    precioConIva: precioProductosConIva,
   };
-
-  /* Forma sin destructuring anidado
-  const unidadProducto = lineaProducto.producto;
-  const cantidad = lineaProducto.cantidad;
-
-  const ivaUnidadProducto = calculaIvaProducto(unidadProducto);
-  const ivaTotalproductos = ivaUnidadProducto.iva * cantidad;
-
-  const precioTotalConIva =
-    unidadProducto.precio * cantidad + ivaTotalproductos;
-
-  return {
-    nombre: unidadProducto.nombre,
-    cantidad: cantidad,
-    precioSinIva: unidadProducto.precio * cantidad,
-    tipoIva: unidadProducto.tipoIva,
-    precioConIva: precioTotalConIva,
-  };
-  */
 };
 
 
 export const calcularTotalticket = (lineasTicket: LineaTicket[]) => {
-  let totalSinIva = 0;
-  let totalConIva = 0;
-  let totalIva = 0;
+  const precioTotalSinIva = lineasTicket.reduce((acc : number, linea : LineaTicket) => acc + calcularPrecioProductos(linea), 0);
+  const precioTotalConIva = lineasTicket.reduce((acc : number, linea : LineaTicket) => acc + precioConIvaProductos(linea), 0);
 
-  lineasTicket.forEach(linea => {
-    const resultado = calcularIvaPorCantidad(linea);
-    totalSinIva = totalSinIva + resultado.precioSinIva;
-    totalConIva = totalConIva + resultado.precioConIva;
-    totalIva = Number((totalConIva - totalSinIva).toFixed(2));
-  });
+  const totalIva = Number((precioTotalConIva - precioTotalSinIva).toFixed(2));
 
   return {
-    totalSinIva,
-    totalConIva,
-    totalIva
+    totalSinIva: precioTotalSinIva,
+    totalConIva: precioTotalConIva,
+    totalIva : totalIva,
   };
 };
 
-const ivaPorTipo = (linea: LineaTicket) : number => {
-  return Number((calcularIvaPorCantidad(linea).precioConIva - calcularIvaPorCantidad(linea).precioSinIva).toFixed(2));
+
+const obtenerIvaPorTipoIva = (tipoIva: TipoIva) => {
+  switch (tipoIva) {
+    case "general":
+      return 0.21;
+
+    case "reducido":
+      return 0.10;
+
+    case "superreducidoA":
+      return 0.05;
+
+    case "superreducidoB":
+      return 0.04;
+
+    case "superreducidoC":
+      return 0;
+
+    case "sinIva":
+      return 0;
+
+    default:
+      return 0;
+  }
 };
 
 
 export const calcularTotalTipoIva = (lineasTicket: LineaTicket[]) : TotalPorTipoIva[]=> {
+  const listaTotalporTipoIva = listaTiposIva.map((tipoIva : TipoIva)=>
+    {
+      const listaDeElementosFiltradosPorIva = lineasTicket.filter((lineaTicket)=> lineaTicket.producto.tipoIva === tipoIva);
 
-  const resultado: TotalPorTipoIva[] = [
-    { tipoIva: "general", cuantia: 0 },
-    { tipoIva: "reducido", cuantia: 0 },
-    { tipoIva: "superreducidoA", cuantia: 0 },
-    { tipoIva: "superreducidoB", cuantia: 0 },
-    { tipoIva: "superreducidoC", cuantia: 0 },
-    { tipoIva: "sinIva", cuantia: 0 },
-  ];
+      const totalIvaProducto = listaDeElementosFiltradosPorIva.reduce((acc : number, elemento : LineaTicket)=> acc + calcularIvaProductos(elemento),0);
 
-// TODO: Preguntar como hacer esto sin indicar la posicion numerica del array o sin switch
-  for (let i=0; i < lineasTicket.length; i++) {
-    const iva = ivaPorTipo(lineasTicket[i]);
+    return {
+      tipoIva: tipoIva,
+      cuantia: totalIvaProducto,
+    };
+  })
+  return listaTotalporTipoIva.filter((totalPorTipoIva) => totalPorTipoIva.cuantia > 0);
+};
 
-    switch (lineasTicket[i].producto.tipoIva) {
-      case "general":
-        resultado[0].cuantia = resultado[0].cuantia + iva;
-        break;
-
-      case "reducido":
-        resultado[1].cuantia = resultado[1].cuantia + iva;
-        break;
-
-      case "superreducidoA":
-        resultado[2].cuantia = resultado[2].cuantia + iva;
-        break;
-
-      case "superreducidoB":
-        resultado[3].cuantia = resultado[3].cuantia + iva;
-        break;
-      case "superreducidoC":
-        resultado[4].cuantia = resultado[4].cuantia + iva;
-        break;
-
-      case "sinIva":
-        resultado[5].cuantia = resultado[5].cuantia + iva;
-        break;
+export const calculaLineaTicketFinal = (lineasTicket: LineaTicket[])  => {
+    let lineaTicket: ResultadoLineaTicket[] = []; // for en funcion aparte
+    for (let i = 0; i < lineasTicket.length; i++) {
+      lineaTicket = [...lineaTicket, infoIvaproductos(lineasTicket[i])];
     }
-  }
-
-  return resultado;
-}
-
+    return lineaTicket;
+};

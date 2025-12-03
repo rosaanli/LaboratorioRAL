@@ -47,3 +47,4 @@ export interface TicketFinal {
   total: ResultadoTotalTicket;
   desgloseIva: TotalPorTipoIva[];
 }
+

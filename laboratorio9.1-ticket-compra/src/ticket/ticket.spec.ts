@@ -2,7 +2,7 @@ import {calculaTicketFinal} from './ticket';
 import { LineaTicket } from "../ticket/model";
 
 describe('calculaTicketFinal', () => {
-  it('deberia devolver el ticket final con lineas, total y desglose de IVA', () => {
+  it('deberia devolver el ticket final con lineas, total y desglose de IVA (solo los que tengan un valor > 0)', () => {
     //arrange
     const productos: LineaTicket[] = [
       {
@@ -83,11 +83,8 @@ describe('calculaTicketFinal', () => {
 
       desgloseIva: [
         { tipoIva: "general", cuantia: 13.44 },
-        { tipoIva: "reducido", cuantia: 0 },
         { tipoIva: "superreducidoA", cuantia: 0.25 },
-        { tipoIva: "superreducidoB", cuantia: 0 },
-        { tipoIva: "superreducidoC", cuantia: 0 },
-        { tipoIva: "sinIva", cuantia: 0 },
+
       ]
     };
 
