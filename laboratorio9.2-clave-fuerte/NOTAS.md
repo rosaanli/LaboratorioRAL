@@ -130,18 +130,3 @@ Así, el operador % te da el resto de la división.
 **promt para iniciar ChatGPT en mi caso**
 
 estoy estudiando programacion, apenas estoy comenzando. QUiero que las respuestas que me des sean faciles de comprender, sobre todo, quiero tener unas buenas bases para programar, por favor ayudame con esto y tenlo en cuenta en tus futuras respuestas. no quiero que me des las respuestas directamente sino es necesario, pero quiero que me ayudes a entender el porque y llegar a la conclusion.
-
-**¿Qué es split?**
-split es un método de los strings (cadenas de texto) en JavaScript y TypeScript.
-Sirve para dividir un texto en partes y devolver un array con esas partes.
-
-¿Cómo se usa?
-const texto = "hola mundo";
-const partes = texto.split(" "); // ["hola", "mundo"]
-El argumento que le pasas a split es el separador (por ejemplo, un espacio " ", una coma ",", etc.).
-Si usas split(''), separa cada letra en un elemento del array.
-Ejemplo:
-
-¿Para qué se usa?
-Para convertir un string en un array de partes.
-Muy útil para recorrer cada letra de una palabra, como en la comprobación de contraseñas.

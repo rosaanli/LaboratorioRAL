@@ -1,4 +1,3 @@
-import {calculaTicketFinal, productos} from './ticket';
+import {} from './constrasena';
 
 
-console.log(calculaTicketFinal(productos))  ;
