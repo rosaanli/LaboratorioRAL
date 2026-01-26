@@ -1,5 +1,5 @@
 import { Personaje } from "./personajes-listado.model";
-import { listadoPersonajes } from "./personajes-listado.api";
+import { listadoPersonajes, filtrarPersonajes } from "./personajes-listado.api";
 
 const crearImagen = (imagen : string) => {
   const imagenElement = document.createElement("img");
@@ -61,12 +61,13 @@ export const pintaPersonaje = async () => {
   }
 };
 
+const limpiarTexto = (texto: string) => texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 export const inputPersonaje = () : string => {
   const personaje = document.getElementById("nombre-personaje");
     if (personaje && personaje instanceof HTMLInputElement) {
       console.log("personaje escrito:", personaje.value)
-      return personaje.value;
+      return limpiarTexto(personaje.value)
     } else
       {
         throw new Error("no se ha podido obtener el input del personaje")
@@ -74,24 +75,23 @@ export const inputPersonaje = () : string => {
   };
 
 
-const limpiarTexto = (texto: string) => texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+export const filtraPersonajes = async () : Promise<Personaje[]> => {
 
-
-export const filtrarPersonajes = async () : Promise<Personaje[]> => {
-  const personajes : Personaje[] = await listadoPersonajes();
   const nombrePersonaje = inputPersonaje();
-
+  const personajes : Personaje[] = await filtrarPersonajes(nombrePersonaje);
+/*
   const listaPersonajeFiltrado : Personaje[] = personajes.filter(
     (personaje) => {
       return limpiarTexto(personaje.nombre.toLowerCase()).includes(limpiarTexto(nombrePersonaje.toLowerCase()));
     })
-  console.log(listaPersonajeFiltrado)
-  return listaPersonajeFiltrado;
+  console.log(listaPersonajeFiltrado)*/
+  return personajes;
 };
 
 
-export const pintaPersonajeFiltrado = (personajeFiltrado : Personaje[]) => {
+export const pintaPersonajeFiltrado = async () => {
   const contenedorPersonajes = document.getElementById("listado-personajes");
+  const personajeFiltrado = await filtraPersonajes();
 
   if (contenedorPersonajes && contenedorPersonajes instanceof HTMLDivElement) {
     contenedorPersonajes.innerHTML="";
@@ -110,8 +110,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     if(botonFiltrar && botonFiltrar instanceof HTMLButtonElement ){
       botonFiltrar.addEventListener("click", async () => {
-        const personaje = filtrarPersonajes();
-        pintaPersonajeFiltrado(await personaje);
+        pintaPersonajeFiltrado();
         })
     }
 

@@ -12,3 +12,15 @@ export const listadoPersonajes = async () : Promise<Personaje[]> => {
   }
 };
 
+
+export const filtrarPersonajes = async(nombrePersonaje: string) : Promise<Personaje[]> => {
+  try{
+    const { data } = await axios.get(
+      `http://localhost:3000/personajes?nombre_like=${nombrePersonaje}`,
+    );
+    return data;
+  }
+  catch {
+    throw new Error ("No se ha podido filtrar el personaje")
+  }
+};
