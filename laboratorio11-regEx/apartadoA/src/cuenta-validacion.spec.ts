@@ -1,4 +1,4 @@
-import { codigoBanco, estaBienFormado, esValido, limpiarNumero, mostrarNombreBanco, numeroCuenta } from "./cuenta-validaciones";
+import { codigoBanco, estaBienFormado, esValido, mostrarNombreBanco, limpiarNumero } from "./cuenta-validaciones";
 
 describe("estaBienFormado", ()=>{
   test.each([

@@ -1,7 +1,19 @@
-import { codigoBanco, estaBienFormado, esValido, informacionCuenta, mostrarNombreBanco,} from "./cuenta-validaciones";
+import { codigoBanco, estaBienFormado, limpiarNumero, esValido, informacionCuenta, mostrarNombreBanco,} from "./cuenta-validaciones";
 
 
-export const crearParrafo = (texto: string) => {
+export const inputNumero = (): string => {
+  const cuenta = document.getElementById("numero-cuenta");
+  if (cuenta && cuenta instanceof HTMLInputElement) {
+    console.log("cuenta:", cuenta.value);
+    return cuenta.value;
+  } else {
+    throw new Error("no se ha podido obtener el input de la cuenta");
+  }
+};
+
+
+
+const crearParrafo = (texto: string) => {
   const parrafo = document.createElement("p");
   parrafo.textContent = texto;
 
@@ -18,8 +30,8 @@ const crearParrafoNegrita = (enNegrita: string, texto: string) => {
   return parrafo;
 };
 
-const pintaCuentaBienFormada = () : string=> {
-  let bienFormado = estaBienFormado();
+const pintaCuentaBienFormada = (numeroCuenta: string) : string=> {
+  let bienFormado = estaBienFormado(numeroCuenta);
 
   if (bienFormado === true){
     return "El IBAN esta bien formado";
@@ -28,45 +40,57 @@ const pintaCuentaBienFormada = () : string=> {
   }
 };
 
-const pintaCuentaValida = () : string=> {
-  let valida = esValido();
+const pintaCuentaValida = (numeroCuenta: string): string => {
+  let valida = esValido(numeroCuenta);
 
-  if (valida === true){
+  if (valida === true) {
     return "El IBAN es Valido";
   } else {
     return "El IBAN NO es Valido";
   }
 };
 
-const pintaNombreBanco = () : string => {
-  const codigo =  codigoBanco();
+const pintaNombreBanco = (numeroCuenta: string): string => {
+  const codigo = codigoBanco(numeroCuenta);
   const nombreBanco = mostrarNombreBanco(codigo);
   return nombreBanco;
-}
+};
 
 
-export const crearDivInfoCuenta = () : HTMLDivElement=>{
+export const crearDivInfoCuenta = (): HTMLDivElement => {
+  const numeroCuentaALimpiar = inputNumero();
+   const numeroCuenta = limpiarNumero(numeroCuentaALimpiar);
+
   const crearDiv = document.createElement("div");
 
-  const estaBienFormadaLaCuenta = pintaCuentaBienFormada();
+  const estaBienFormadaLaCuenta = pintaCuentaBienFormada(numeroCuenta);
   const resultadoFormacionCuenta = crearParrafo(estaBienFormadaLaCuenta);
   crearDiv.appendChild(resultadoFormacionCuenta);
 
-  const esValido = pintaCuentaValida();
-  const resultadoCuentaValida = crearParrafo(esValido)
+  const esValido = pintaCuentaValida(numeroCuenta);
+  const resultadoCuentaValida = crearParrafo(esValido);
   crearDiv.appendChild(resultadoCuentaValida);
 
-  const nombreBanco = pintaNombreBanco();
+  const nombreBanco = pintaNombreBanco(numeroCuenta);
   const resultadoNombreBanco = crearParrafoNegrita("Banco: ", nombreBanco);
   crearDiv.appendChild(resultadoNombreBanco);
 
-  const pintaCodigoBanco = codigoBanco();
-  const resultadoCodigoBanco = crearParrafoNegrita("Codigo Sucursal: ", pintaCodigoBanco);
+  const pintaCodigoBanco = codigoBanco(numeroCuenta);
+  const resultadoCodigoBanco = crearParrafoNegrita(
+    "Codigo Sucursal: ",
+    pintaCodigoBanco,
+  );
   crearDiv.appendChild(resultadoCodigoBanco);
 
-  const infoCuenta = informacionCuenta();
-  const digitoControl = crearParrafoNegrita("Digito de control: ", infoCuenta.digitoControl)
-  const numeroDeCuenta = crearParrafoNegrita("Numero de cuenta: " , infoCuenta.numeroCuenta);
+  const infoCuenta = informacionCuenta(numeroCuenta);
+  const digitoControl = crearParrafoNegrita(
+    "Digito de control: ",
+    infoCuenta.digitoControl,
+  );
+  const numeroDeCuenta = crearParrafoNegrita(
+    "Numero de cuenta: ",
+    infoCuenta.numeroCuenta,
+  );
   crearDiv.appendChild(digitoControl);
   crearDiv.appendChild(numeroDeCuenta);
 

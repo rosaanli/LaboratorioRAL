@@ -10,30 +10,18 @@ WW: código de país
 0000000000: número de cuenta
 */
 
-export const numeroCuenta = () : string => {
-  const cuenta = document.getElementById("numero-cuenta");
-    if (cuenta && cuenta instanceof HTMLInputElement) {
-      console.log("cuenta:", cuenta.value)
-      return cuenta.value;
-    } else
-      {
-        throw new Error("no se ha podido obtener el input de la cuenta")
-      }
-  };
-
-export const limpiarNumero = (): string => {
-  const inputNumero = numeroCuenta();
-  const numeroLimpio = inputNumero.replace(/\s|-/g, "");
+export const limpiarNumero = (numeroCuenta: string): string => {
+  const numeroLimpio = numeroCuenta.replace(/\s|-/g, "");
 
   return numeroLimpio;
 };
 
-export const estaBienFormado = (): boolean => {
-  const numeroLimpio = limpiarNumero();
+
+export const estaBienFormado = (numeroCuenta: string): boolean => {
   const patron =
     /^(?<codigoDePais>[A-Z]{2})[\s|-]?(?<digitoControl>\d{2})[\s|-]?(?<codigoBanco>\d{4})[\s|-]?(?<codigoSucursal>\d{4})[\s|-]?(?<digitoControlSecundario>\d{2})[\s|-]?(?<numeroCuenta>\d{10})$/;
 
-  const coincidencia = patron.exec(numeroLimpio);
+  const coincidencia = patron.exec(numeroCuenta);
 
   if (coincidencia) {
     const {
@@ -55,26 +43,24 @@ export const estaBienFormado = (): boolean => {
     );
     return true;
   } else {
-    console.log("ERROR: no esta bien formado");
+    alert("ERROR: no esta bien formado");
     return false;
   }
 };
 
 
-export const esValido = (): boolean => {
-  const numeroLimpio = limpiarNumero();
+export const esValido = (numeroCuenta: string): boolean => {
 
-  const validar = isValidIBAN(numeroLimpio);
+  const validar = isValidIBAN(numeroCuenta);
   return validar;
 };
 
-export const codigoBanco = (): string => {
-  const numeroLimpio = limpiarNumero();
+export const codigoBanco = (numeroCuenta: string): string => {
 
   const patron =
     /^(?<codigoDePais>[A-Z]{2})[\s|-]?(?<digitoControl>\d{2})[\s|-]?(?<codigoBanco>\d{4})[\s|-]?(?<codigoSucursal>\d{4})[\s|-]?(?<digitoControlSecundario>\d{2})[\s|-]?(?<numeroCuenta>\d{10})$/;
 
-  const coincidencia = patron.exec(numeroLimpio);
+  const coincidencia = patron.exec(numeroCuenta);
 
   if (coincidencia) {
     const { codigoBanco } = coincidencia.groups as any;
@@ -96,18 +82,17 @@ export const mostrarNombreBanco = (codigo: string): string => {
   }
 };
 
-export const informacionCuenta = () => {
-    const numeroLimpio = limpiarNumero();
-
+export const informacionCuenta = (numeroCuenta: string) => {
   const patron =
     /^(?<codigoDePais>[A-Z]{2})[\s|-]?(?<digitoControl>\d{2})[\s|-]?(?<codigoBanco>\d{4})[\s|-]?(?<codigoSucursal>\d{4})[\s|-]?(?<digitoControlSecundario>\d{2})[\s|-]?(?<numeroCuenta>\d{10})$/;
 
-  const coincidencia = patron.exec(numeroLimpio);
+  const coincidencia = patron.exec(numeroCuenta);
 
   if (coincidencia) {
-    const { digitoControl, numeroCuenta, codigoBanco } = coincidencia.groups as any;
+    const { digitoControl, numeroCuenta, codigoBanco } =
+      coincidencia.groups as any;
 
-    return {digitoControl, numeroCuenta, codigoBanco};
+    return { digitoControl, numeroCuenta, codigoBanco };
   } else {
     throw new Error("No se puede obtener la informacion de la cuenta");
   }
