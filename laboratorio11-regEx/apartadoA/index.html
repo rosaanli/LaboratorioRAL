@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio RegEx</title>
+  <link rel="stylesheet" href="./src/reset.css">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+
+<body>
+  <main class="main">
+    <header>
+      <div class="contenedor" id="contenedor-header">
+        <h1> CONSULTA DE IBAN</h1>
+      </div>
+    </header>
+
+    <div class="contenedor-busqueda" id="contenedor-busqueda">
+      <label for="">Introduzca el IBAN</label>
+      <input type="text" id="numero-cuenta" placeholder="Escribe el numero de cuenta">
+      <button type="button" id="boton-buscar">Buscar</button>
+    </div>
+
+      <div id="resultado-busqueda">
+      </div>
+  </main>
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>
