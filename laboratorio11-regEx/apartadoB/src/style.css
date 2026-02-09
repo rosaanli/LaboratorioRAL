@@ -2,11 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rock+Salt&display=swap');
 
 :root {
-  --bg-color: rgb(229, 234, 238);
-  --color-primary: #e5c3ff;
-  --color-quaternary: #00c9a7;
-  --color-secondary: #be93fd;
-  --color-tertiary: #845ec2;
+  --bg-color: rgb(255, 255, 255);
+  --color-primary: #469f92;
+  --color-quaternary: #002921;
+  --color-secondary: #00a4af;
+  --color-tertiary: #5d93d7;
   --font-family: "DynaPuff", "Arial", "Helvetica", sans-serif;
   --font-family-secondary: "Roboto", "Arial", "Helvetica", sans-serif;
 }
@@ -26,7 +26,7 @@ body {
 }
 
 button {
-  background-color: #845ec2;
+  background-color: var(--color-quaternary);
   border: none;
   border-radius: 4px;
   color: #fff;
@@ -44,12 +44,12 @@ button:hover {
   background-color: var(--color-secondary);
 }
 
-button[type="submit"] {
+button {
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 10px;
+  margin: 20px;
   padding: 8px;
-  width: 100%;
+  width: 50%;
 }
 
 .card {
@@ -71,6 +71,7 @@ button[type="submit"] {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
+
 .card img {
   display: block;
   height: 200px;
@@ -78,7 +79,6 @@ button[type="submit"] {
   object-position: center;
   width: 150px;
 }
-
 .contenedor {
   align-items: center;
   display: flex;
@@ -87,11 +87,19 @@ button[type="submit"] {
   margin-top: 10px;
 }
 
+.contenedor-filtro {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+}
 
 h1 {
   font-size: 2.5rem;
   font-weight: 500;
   margin-bottom: 10px;
+  color: #fff;
 }
 
 h2 {
@@ -109,16 +117,24 @@ header {
   padding: 20px;
 }
 
-input[type="text"],
-input[type="number"],
+
 textarea {
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
+  margin: 20px;
   padding: 8px;
+  width: 70%;
 }
 
 label {
   font-weight: bold;
+}
+
+.listado-imagenes {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 

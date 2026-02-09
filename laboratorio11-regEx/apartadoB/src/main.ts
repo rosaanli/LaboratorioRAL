@@ -1,11 +1,11 @@
-const myRegEx = /\....$/;
+import { filtrarImg } from "./mortadelo-helpers";
 
-let resultado = myRegEx.test("miarchivo.txt");
-console.log(resultado);
 
-resultado = myRegEx.test("miarchivo.jpg");
-console.log(resultado);
+document.addEventListener("DOMContentLoaded", ()=>{
 
-resultado = myRegEx.test("miarchivo.pn");
-console.log(resultado);
-
+  const boton = document.getElementById("boton-extraer")
+  if (boton && boton instanceof HTMLButtonElement)
+    boton.addEventListener("click", ()=>{
+      filtrarImg();
+    })
+})

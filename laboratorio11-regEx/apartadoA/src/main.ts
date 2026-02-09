@@ -13,12 +13,12 @@ export const mostrarInfoCuenta = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  // DUDA: El try/catch se utiliza solo cuando estamos consumiendo APIs? deberia meterlo en todas las funciones o no es recomendable?
   const botonBuscar = document.getElementById("boton-buscar");
   if (botonBuscar && botonBuscar instanceof HTMLButtonElement) {
     botonBuscar.addEventListener("click", () => {
       console.log(mostrarInfoCuenta)
       mostrarInfoCuenta();
-
     })
   }
 })
